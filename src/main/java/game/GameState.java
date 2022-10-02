@@ -45,14 +45,13 @@ public class GameState implements Serializable {
     }
 
     public boolean valid(int x, int y){
-        //TODO : Avoid two player in the same position
         //out of map!
         if(!(x >= 0 && x < mazeMap.length && y >= 0 && y < mazeMap.length))
             return false;
         else{
             for(int[] position : this.allPlayerPositions.values()){
                 if(x == position[0] && y == position[1])
-                    return false;
+                    return false;// two player in same position
             }
             return true;
         }
@@ -62,7 +61,7 @@ public class GameState implements Serializable {
         Random r = new Random();
         int newX = r.nextInt(mazeMap.length);
         int newY = r.nextInt(mazeMap.length);
-        while(!valid(newX,newY)){
+        while(!valid(newX,newY) || mazeMap[newX][newY] == '*'){
             newX = r.nextInt(mazeMap.length);
             newY = r.nextInt(mazeMap.length);
         }

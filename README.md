@@ -2,7 +2,7 @@
 This is the repo of a p2p maze game.
 
 # II. Project Structure
-**Game** : The entry of the maze game. Every client/player is a "Game"
+**game** : The entry of the maze game. Every client/player is a "game"
 
 **GameHandler** : Interface, to modify/retrieve info from a game(client/player)
 
@@ -20,7 +20,7 @@ This is the repo of a p2p maze game.
 
 **TrackerHandlerImpl** : The implementation of TrackHandler.
 
-# III. Game Main Thread Logic
+# III. game Main Thread Logic
 **1.** Use the parameter to create a game object
 
 **2.** Connect to the tracker, get the basic game info(N,K and a random player) and register yourself
@@ -82,7 +82,7 @@ the new backup server is already regenerated. Just set your new backup according
 ## 3. Random Client Crash
 Just delete it from your local game state, notify your primary and backup and the tracker(let them also delete it).
 
-# VI: Game state update policy
+# VI: game state update policy
 
 
 ## Policy:

@@ -2,6 +2,9 @@ package game;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TrackerHandlerImpl extends UnicastRemoteObject implements TrackerHandler{
 
@@ -25,12 +28,37 @@ public class TrackerHandlerImpl extends UnicastRemoteObject implements TrackerHa
     @Override
     public String getPlayer() throws RemoteException{
         return this.tracker.playerList.peekFirst();
-        // TODO : SHOULD BE random PLAYER !
     }
+
+
 
     @Override
     public int getPlayerListLength() throws RemoteException{
-        return this.tracker.playerList.size();
+        synchronized (this.tracker.playerList){
+            return this.tracker.playerList.size();
+        }
+    }
+
+    @Override
+    public List<Object> getPlayerListInfo() throws RemoteException{
+        synchronized (this.tracker.playerList){
+            List<Object> res = new ArrayList<>();
+            res.add(this.tracker.playerList.peekFirst());
+            res.add(this.tracker.playerList.size());
+            return res;
+        }
+    }
+
+    @Override
+    public ConcurrentHashMap<String,Boolean> getInitSet() throws RemoteException{
+        synchronized (this.tracker.initSet){
+            return this.tracker.initSet;
+        }
+    }
+
+    @Override
+    public void initRegister(String playerId) throws RemoteException{
+        this.tracker.initSet.put(playerId,true);
     }
 
     @Override
@@ -41,5 +69,10 @@ public class TrackerHandlerImpl extends UnicastRemoteObject implements TrackerHa
     @Override
     public void deletePlayer(String playerId) throws RemoteException{
         this.tracker.playerList.remove(playerId);
+    }
+
+    @Override
+    public void deleteInitSet(String playerId) throws RemoteException{
+        this.tracker.initSet.remove(playerId);
     }
 }

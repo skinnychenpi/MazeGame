@@ -13,5 +13,8 @@ public interface GameHandler extends Remote {
     public void updateBackup(String backupServer) throws RemoteException;
     public boolean ping() throws RemoteException;
     public void deletePlayer(String playerId) throws RemoteException;
+    public boolean updateGameStateForPlayer(String playerId, int opNum) throws RemoteException;
+    public void addNewPlayer(String playerId) throws RemoteException,NullPointerException;
+    public void syncBackup() throws RemoteException;
 
 }
